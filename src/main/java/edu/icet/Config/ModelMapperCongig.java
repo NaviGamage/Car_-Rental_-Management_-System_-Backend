@@ -1,14 +1,13 @@
 package edu.icet.Config;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class ModelMapperConfig {
+public class ModelMapperCongig {
 
     @Bean
-    public ModelMapper modelMapper() {
-        return new ModelMapper();
+    public org.modelmapper.ModelMapper modelMapper() {
+        return new org.modelmapper.ModelMapper();
     }
 }
