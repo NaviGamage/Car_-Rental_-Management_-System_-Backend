@@ -15,7 +15,6 @@ public class UserResponseDto {
     private Users.Role role;
 
 
-
     public UserResponseDto (Long userId, String fullName, String email, String phoneNumber, String address, String nic, Users.Role role) {
 
         this.userId = userId;

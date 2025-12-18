@@ -1,5 +1,6 @@
 package edu.icet.Model.Entity;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,6 +15,7 @@ public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long userId;
 
     @Column(nullable = false, length = 100)
@@ -25,7 +27,7 @@ public class Users {
     @Column(nullable = false)
     private String password;
 
-    @Column(length = 15)
+    @Column(length = 10)
     private String phoneNumber;
 
     @Column(length = 200)
@@ -40,6 +42,11 @@ public class Users {
 
     public enum Role {
         CUSTOMER,
-        ADMIN
+        ADMIN;
+
+        @JsonCreator
+        public static Role fromValue(String value){
+            return Role.valueOf(value.toUpperCase());
+        }
     }
 }
