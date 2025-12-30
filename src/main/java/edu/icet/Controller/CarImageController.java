@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/car-images")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 public class CarImageController {
 
     private final CarImageService carImageService;

@@ -42,7 +42,7 @@ public class Users {
 
     public enum Role {
         CUSTOMER,
-        ADMIN;
+        ADMIN, ADMINE;
 
         @JsonCreator
         public static Role fromValue(String value){

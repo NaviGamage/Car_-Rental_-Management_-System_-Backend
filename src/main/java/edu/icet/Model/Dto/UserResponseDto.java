@@ -2,8 +2,11 @@ package edu.icet.Model.Dto;
 
 import edu.icet.Model.Entity.Users;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 
 @Data
+@NoArgsConstructor
 public class UserResponseDto {
 
     private Long userId;
