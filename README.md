@@ -1,6 +1,6 @@
 # 🚗 DriveEase - Car Rental Management System
 
-**Backend:** Spring Boot, Spring Security, Spring Data JPA, JWT
+**Backend:** Spring Boot, Spring Security, Spring Data JPA, 
 **Database:** MySQL
 
 ## Features
