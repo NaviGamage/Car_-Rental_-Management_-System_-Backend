@@ -14,7 +14,6 @@ import java.util.List;
 @RequestMapping("/api/cars")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
-
 public class CarDetailsController {
 
     private final CarDetailsService carDetailsService;
@@ -25,14 +24,17 @@ public class CarDetailsController {
         return new ResponseEntity<>(savedCar, HttpStatus.CREATED);
     }
 
-    @PostMapping("/{carId}")
-    public ResponseEntity<CarDetailsDto> updateCar(@PathVariable Long carId,@Valid @RequestBody CarDetailsDto carDetailsDto) {
+    @PutMapping("/{carId}")
+    public ResponseEntity<CarDetailsDto> updateCar(
+            @PathVariable Long carId,
+            @Valid @RequestBody CarDetailsDto carDetailsDto) {
         CarDetailsDto updatedCar = carDetailsService.updateCar(carId, carDetailsDto);
         return ResponseEntity.ok(updatedCar);
     }
 
     @DeleteMapping("/{carId}")
-    public ResponseEntity<String> deleteCar(@PathVariable Long carId) {carDetailsService.deleteCar(carId);
+    public ResponseEntity<String> deleteCar(@PathVariable Long carId) {
+        carDetailsService.deleteCar(carId);
         return ResponseEntity.ok("Car deleted successfully");
     }
 
@@ -73,13 +75,16 @@ public class CarDetailsController {
     }
 
     @GetMapping("/price-range")
-    public ResponseEntity<List<CarDetailsDto>> getCarsByPriceRange(@RequestParam Double minRate,@RequestParam Double maxRate) {
+    public ResponseEntity<List<CarDetailsDto>> getCarsByPriceRange(
+            @RequestParam Double minRate,
+            @RequestParam Double maxRate) {
         List<CarDetailsDto> cars = carDetailsService.getCarsByPriceRange(minRate, maxRate);
         return ResponseEntity.ok(cars);
     }
 
     @GetMapping("/capacity/{seatingCapacity}")
-    public ResponseEntity<List<CarDetailsDto>> getCarsBySeatingCapacity(@PathVariable Integer seatingCapacity) {
+    public ResponseEntity<List<CarDetailsDto>> getCarsBySeatingCapacity(
+            @PathVariable Integer seatingCapacity) {
         List<CarDetailsDto> cars = carDetailsService.getCarsBySeatingCapacity(seatingCapacity);
         return ResponseEntity.ok(cars);
     }
@@ -92,12 +97,15 @@ public class CarDetailsController {
             @RequestParam(required = false) Double minRate,
             @RequestParam(required = false) Double maxRate,
             @RequestParam(required = false) Integer seatingCapacity) {
-        List<CarDetailsDto> cars = carDetailsService.searchCars(brand, status, fuelType, minRate, maxRate, seatingCapacity);
+        List<CarDetailsDto> cars = carDetailsService.searchCars(
+                brand, status, fuelType, minRate, maxRate, seatingCapacity);
         return ResponseEntity.ok(cars);
     }
 
     @PatchMapping("/{carId}/status")
-    public ResponseEntity<String> updateCarStatus(@PathVariable Long carId,@RequestParam String status) {
+    public ResponseEntity<String> updateCarStatus(
+            @PathVariable Long carId,
+            @RequestParam String status) {
         carDetailsService.updateCarStatus(carId, status);
         return ResponseEntity.ok("Car status updated successfully");
     }

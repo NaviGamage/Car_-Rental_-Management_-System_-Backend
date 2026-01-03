@@ -2,7 +2,11 @@ package edu.icet.Service;
 
 import edu.icet.Model.Dto.CarDetailsDto;
 import edu.icet.Model.Entity.CarDetails;
+import edu.icet.Model.Entity.Rental;
 import edu.icet.Repository.CarDetailsRepository;
+import edu.icet.Repository.CarImageRepository;
+import edu.icet.Repository.RentalRepository;
+import edu.icet.Repository.PaymentRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -10,12 +14,16 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class CarDetailsServiceImpl implements CarDetailsService{
 
     private final CarDetailsRepository carDetailsRepository;
+    private final RentalRepository rentalRepository;
+    private final CarImageRepository carImageRepository;
+    private final PaymentRepository paymentRepository;
     private final ModelMapper modelMapper;
 
     @Override
@@ -62,8 +70,19 @@ public class CarDetailsServiceImpl implements CarDetailsService{
         if (!carDetailsRepository.existsById(carId)) {
             throw new RuntimeException("Car not found with id: " + carId);
         }
-        carDetailsRepository.deleteById(carId);
 
+        // Delete in order: payments → rentals → images → car
+        // 1. Delete all payments associated with rentals for this car
+        paymentRepository.deleteByCarId(carId);
+
+        // 2. Delete rentals
+        rentalRepository.deleteByCarId(carId);
+
+        // 3. Delete car images
+        carImageRepository.deleteByCarId(carId);
+
+        // 4. Finally delete the car
+        carDetailsRepository.deleteById(carId);
     }
 
     @Override

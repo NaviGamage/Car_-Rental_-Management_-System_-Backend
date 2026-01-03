@@ -2,13 +2,16 @@ package edu.icet.Repository;
 
 import edu.icet.Model.Entity.Rental;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
 
-public interface RentalRepository extends JpaRepository<Rental,Long> {
+@Repository
+public interface RentalRepository extends JpaRepository<Rental, Long> {
 
     // Find all rentals for a specific user
     List<Rental> findByUserId(Long userId);
@@ -52,4 +55,9 @@ public interface RentalRepository extends JpaRepository<Rental,Long> {
     @Query("SELECT r FROM Rental r WHERE r.startDate >= :startDate AND r.endDate <= :endDate")
     List<Rental> findRentalsBetweenDates(@Param("startDate") LocalDate startDate,
                                          @Param("endDate") LocalDate endDate);
+
+    // Delete all rentals for a specific car (for cascade delete)
+    @Modifying
+    @Query("DELETE FROM Rental r WHERE r.carId = :carId")
+    void deleteByCarId(@Param("carId") Long carId);
 }

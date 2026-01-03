@@ -2,6 +2,7 @@ package edu.icet.Repository;
 
 import edu.icet.Model.Entity.Payment;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -38,4 +39,9 @@ public interface PaymentRepository extends JpaRepository<Payment,Long> {
     @Query("SELECT COUNT(p) FROM Payment p WHERE p.paymentDate >= :startDate AND p.paymentDate <= :endDate")
     long countPaymentsForPeriod(@Param("startDate") LocalDate startDate,
                                 @Param("endDate") LocalDate endDate);
+
+    // Delete all payments for rentals associated with a specific car (native SQL)
+    @Modifying
+    @Query(value = "DELETE FROM payments WHERE booking_id IN (SELECT booking_id FROM rentals WHERE car_id = :carId)", nativeQuery = true)
+    void deleteByCarId(@Param("carId") Long carId);
 }
