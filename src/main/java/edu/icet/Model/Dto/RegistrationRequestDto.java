@@ -30,4 +30,5 @@ public class RegistrationRequestDto {
     private String nic;
 
     private Users.Role role = Users.Role.CUSTOMER;
+
 }

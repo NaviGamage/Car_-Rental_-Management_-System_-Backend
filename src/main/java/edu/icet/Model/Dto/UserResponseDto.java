@@ -2,8 +2,11 @@ package edu.icet.Model.Dto;
 
 import edu.icet.Model.Entity.Users;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 
 @Data
+@NoArgsConstructor
 public class UserResponseDto {
 
     private Long userId;
@@ -13,7 +16,6 @@ public class UserResponseDto {
     private String address;
     private String nic;
     private Users.Role role;
-
 
 
     public UserResponseDto (Long userId, String fullName, String email, String phoneNumber, String address, String nic, Users.Role role) {
